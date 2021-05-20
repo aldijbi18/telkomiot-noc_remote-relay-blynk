@@ -12,9 +12,9 @@
 DHT dht (DHTPIN, DHTTYPE);
 int reboot;
 float temp, hum;
-char auth[] = "7uusEe1uRaMPIPO9wxsxSDidiBFp3BTn";
-char ssid[] = "Tribe IoT";
-char pass[] = "telkom2020";
+char auth[] = "blynk_auth";
+char ssid[] = "wifi_ssid";
+char pass[] = "wifi_password";
 BLYNK_WRITE(V1)
 {
   reboot = param.asInt();
@@ -28,16 +28,10 @@ void setup() {
 
 void loop() {
   Blynk.run();
-  if (reboot == 1) {
-    digitalWrite(relay, LOW);
-    delay(200);
-    digitalWrite(relay, HIGH);
-    delay(2000);
-  }
   hum = dht.readTemperature();
   temp = dht.readHumidity();
-  Blynk.virtualWrite (V3, temp);
-  Blynk.virtualWrite (V4, hum);
+  Blynk.virtualWrite (V2, temp);
+  Blynk.virtualWrite (V3, hum);
   Serial.print(temp);
   Serial.print("°C, ");
   Serial.print(hum);
